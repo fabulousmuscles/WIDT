@@ -1,0 +1,85 @@
+<!doctype html>
+                               
+<html ng-app="widtApp">
+<head>                         
+    <meta charset="utf-8">     
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+    <title>Node/Angular Microblogging App</title>
+      
+    <link href="libs/bootstrap-css-only/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+  
+    <script src="libs/angular/angular.min.js"></script>
+    <script src="libs/angular-resource/angular-resource.min.js"></script>
+    <script src="libs/angular-bootstrap/ui-bootstrap.min.js"></script>
+  
+    <script src="js/app.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/services.js"></script>
+
+</head>
+<body ng-controller="entryCtrl">
+        <div class="container" ng-controller="categoryCtrl">
+
+            <div class="jumbotron text-center">
+                <h1>WIDT</h1>
+            </div>
+            <div id="num-entries" class="text-center">
+                <h1>
+                    <div class="label label-info">{{ entries.length }}</div> Entries and counting!
+                </h1>
+            </div>
+
+            <!-- main form for creating new entries -->
+            <div id="entry-form" class="row">
+                <div class="col-sm-8 col-sm-offset-2">
+                    <!-- have angular handle the form submission -->
+                    <form ng-submit="addEntry()">
+                        <div class="form-group">
+
+                            <textarea class="form-control" rows="5"
+                                placeholder="What did you do today?" type="text" ng-model="newEntry.text">
+                            </textarea>
+                        </div>
+
+                        <div class="text-right">
+                            <button type="submit" class="btn btn-primary btn-lg">Add</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+            <!-- list entries and their categories -->
+            <div id="entry-list" class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="form-group" ng-repeat="entry in entries">
+
+                        <textarea class="form-control" rows="5">{{ entry.text }}</textarea>
+                        <div class="text-right">
+                            <input type="button" class="btn btn-danger" ng-click="deleteEntry(entry._id)" value="Delete">
+                        </div>
+
+                        <div class="text-right">
+                            <div class="form-group" ng-repeat="category in categories">
+                                {{ category.text }}
+                                <div class="text-right">
+                                    <button type="button" class="btn btn-danger" ng-click="deleteCategory(category._id)">
+                                        Delete Category
+                                    </button>
+                                </div>
+                            </div>
+
+                                <input class=form-control" placeholder="New category" ng-model="newCategory.text">
+                                <button type="button" class="btn btn-primary btn-lg" 
+                                    ng-click="addCategory(newCategory); newCategory = ''">Add</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div><!-- end div.container -->
+</body>
+</html>
+

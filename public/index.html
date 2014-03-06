@@ -41,6 +41,22 @@
                             <textarea class="form-control" rows="5"
                                 placeholder="What did you do today?" type="text" ng-model="newEntry.text">
                             </textarea>
+                            <div class="input-group">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" 
+                                    placeholder="New Category" ng-model="newEntryCategory.text">
+
+                                    <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default"
+                                        ng-click="addEntryCategory()">+</button>
+                                    </span>
+
+                                    <span ng-repeat="category in entryCategories">
+                                            <input type="button" class="btn" ng-click="deleteEntryCategory(category)" 
+                                            value='{{ category + " |\u2718" }}'>
+                                    </span>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="text-right">

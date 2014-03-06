@@ -3,7 +3,7 @@ var app      = express();
 var mongoose = require('mongoose');
 var port     = process.env.PORT || 8000;
 
-var database = require('./config/database');
+var database = require('./config/db');
 mongoose.connect(database.url);
   
 app.configure(function() {     

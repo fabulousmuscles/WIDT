@@ -1,0 +1,11 @@
+{
+  "name"         : "widt",
+  "version"      : "0.0.1",    
+  "description"  : "What I Did Today: a simple microblogging app",
+  "main"         : "server.js",
+  "author"       : "Reuben Urbina",   
+  "dependencies" : {           
+    "express"    : "latest",   
+    "mongoose"   : "latest"    
+  }
+} 

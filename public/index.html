@@ -19,8 +19,8 @@
     <script src="js/services.js"></script>
 
 </head>
-<body ng-controller="entryCtrl">
-        <div class="container" ng-controller="categoryCtrl">
+<body ng-controller="mainCtrl">
+        <div class="container">
 
             <div class="jumbotron text-center">
                 <h1>WIDT</h1>
@@ -71,9 +71,9 @@
                                 </div>
                             </div>
 
-                                <input class=form-control" placeholder="New category" ng-model="newCategory.text">
+                                <input class=form-control" placeholder="New category" type="text" ng-model="newCategory.text">
                                 <button type="button" class="btn btn-primary btn-lg" 
-                                    ng-click="addCategory(newCategory); newCategory = ''">Add</button>
+                                    ng-click="addCategory()">Add</button>
                         </div>
                     </div>
 

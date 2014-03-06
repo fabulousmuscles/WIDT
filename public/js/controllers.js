@@ -2,8 +2,16 @@
                                
 var widtControllers = angular.module('widtControllers', [])
 
-widtControllers.controller('entryCtrl', ['$scope', 'Entry',
-    function ($scope, Entry) { 
+widtControllers.controller('mainCtrl', ['$scope', 'Entry', 'Category',
+    function ($scope, Entry, Category) { 
+
+        ///////////////////////////////
+        //////////* Entries *//////////
+        ///////////////////////////////
+        
+        $scope.newEntry = {
+            text: ""
+        };
         // load the page with all entries
         $scope.entries = Entry.query(); 
   
@@ -28,19 +36,21 @@ widtControllers.controller('entryCtrl', ['$scope', 'Entry',
             }
         };
 
-}]);
 
-// This controller is almost the same as the one above, except this one
-// is for categories.
-widtControllers.controller('categoryCtrl', ['$scope', 'Category',
-    function ($scope, Category) {   
+        //////////////////////////////////
+        //////////* Categories *//////////
+        //////////////////////////////////
+        
+        $scope.newCategory = {
+            text: ""
+        };
 
         $scope.categories = Category.query();
 
-        $scope.addCategory = function(newCat) {
-                Category.save(newCat, function(category) {
-                $scope.categories.push(category);
-                $scope.newCategory = '';
+        $scope.addCategory = function() {
+            Category.save($scope.newCategory, function(category) {
+            $scope.categories.push(category);
+            $scope.newCategory = '';
             });
         }
 

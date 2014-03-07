@@ -41,8 +41,14 @@
                             <textarea class="form-control" rows="5"
                                 placeholder="What did you do today?" type="text" ng-model="newEntry.text">
                             </textarea>
-                            <select ng-model="selectCategory" ng-options="c.text for c in categories" ng-change="addEntryCategory(selectCategory)">
-                            </select>
+
+                            <div class="input-group">
+                                <select ng-model="selectCategory" 
+                                    ng-options="c.text for c in categories" ng-change="addEntryCategory(selectCategory)">
+                                </select>
+                                <input type="button" class="btn" ng-click="deleteCategory(selectCategory._id)" value="-">
+                            </div>
+
                             <div class="input-group">
                                 <div class="input-group">
                                     <input type="text" class="form-control" 

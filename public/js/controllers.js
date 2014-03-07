@@ -41,13 +41,6 @@ widtControllers.controller('mainCtrl', ['$scope', 'Entry', 'Category',
         
         $scope.categories = Category.query();
 
-        $scope.addCategory = function() {
-            Category.save($scope.newCategory, function(category) {
-            $scope.categories.push(category);
-            $scope.newCategory = '';
-            });
-        }
-
         $scope.deleteCategory = function(id) {
             Category.delete({categoryId:id});
             for (var i = 0; i < $scope.categories.length; i++) {
@@ -65,16 +58,38 @@ widtControllers.controller('mainCtrl', ['$scope', 'Entry', 'Category',
 
         $scope.addEntryCategory = function(category) {
             if (category) {
-                // If the category hasn't already been added, add it
+                // If the category hasn't already been added as an entry
+                // category, add it
                 if ($scope.entryCategories.indexOf(category.text) < 0) {
                     $scope.entryCategories.push(category.text);
                 }
-                // if the category doesn't have an id, it must've came from
-                // the text input, so clear it when we're done
-                if (!category._id)
-                    category.text = '';
+
+                if ($scope.categories.length) {
+                    // Has the entry category been registered as a 'global'
+                    // category yet? Let's find out
+                    var count = 0;
+                    angular.forEach($scope.categories, function(value) {
+                        if (category.text === value.text)
+                            count++;
+                    });
+                    if (!count) {
+                        // if there's no count, this category hasn't been
+                        // added to the 'global' categories, so add it
+                        Category.save(category, function(c) {
+                            $scope.categories.push(c);
+                            category.text = '';
+                        });
+                    }
+                } else {
+                    // If we're here, then there must not be any categories yet
+                    Category.save(category, function(c) {
+                        $scope.categories.push(c);
+                        category.text = '';
+                    });
+                }
             }
         }
+
         $scope.deleteEntryCategory = function(category) {
             for (var i = 0; i < $scope.entryCategories.length; i++) {
                 if (category === $scope.entryCategories[i]) {

@@ -2,7 +2,7 @@
                                
 var widtControllers = angular.module('widtControllers', [])
 
-widtControllers.controller('mainCtrl', ['$scope', 'Entry', 'Category',
+widtControllers.controller('MainCtrl', ['$scope', 'Entry', 'Category',
     function ($scope, Entry, Category) { 
 
         //////////* Entries *//////////

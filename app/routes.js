@@ -26,15 +26,14 @@ module.exports = function(app) {
 
     //update an enrty
     app.put('/api/entries', function(req, res) {
-        Entry.findOne({_id : req.body._id}, function(err, entry) {
+        Entry.findById(req.body._id, function(err, entry) {
             if (err) {
                 res.send(err);
             } else {
                 entry.text = req.body.text;
                 entry.modified = new Date;
-                console.log(entry.modified);
-                entry.save(function(err, newEntry) {
-                    err ? res.send(err) : res.send(newEntry);
+                entry.save(function(err, updatedEntry) {
+                    err ? res.send(err) : res.send(updatedEntry);
                 });
             }
         });

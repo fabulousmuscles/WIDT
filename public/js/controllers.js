@@ -11,17 +11,21 @@ widtControllers.controller('mainCtrl', ['$scope', 'Entry', 'Category',
         $scope.entries = Entry.query(); 
   
         // method for creating an entry 
-        $scope.addEntry = function() {  
-            // assign any categories that have been attached to this entry
-            $scope.newEntry.categories = $scope.entryCategories;
-            Entry.save($scope.newEntry, function(entry) {
-                // Add the entry to the front of the entries array
-                $scope.entries.unshift(entry)
-                // clear the textarea 
-                $scope.newEntry = ''; 
-                // reset entry categories
-                $scope.entryCategories = [] 
-            });                
+        $scope.addEntry = function(newEntry) {  
+            if (newEntry) {
+                // assign any categories that have been attached to this entry
+                newEntry.categories = $scope.entryCategories;
+                Entry.save(newEntry, function(entry) {
+                    // Add the entry to the front of the entries array
+                    $scope.entries.unshift(entry)
+                    // clear the textarea 
+                    $scope.newEntry = ''; 
+                    // reset entry categories
+                    $scope.entryCategories = [] 
+                    // reset select box
+                    $scope.selectCategory = null;
+                });                
+            }
         }
   
         // method for deleting an entry 
@@ -35,27 +39,21 @@ widtControllers.controller('mainCtrl', ['$scope', 'Entry', 'Category',
             }
         };
 
+        // method for updating an entry
+        $scope.updateEntry = function(e) {
+            Entry.update(e, function(entry) {
+                e.modified = entry.modified;
+            });
+        }
+        //////////* Categories *//////////
 
-        //////////* Global Categories *//////////
-        // These are categories that exist outside of entries
-        
-        $scope.categories = Category.query();
-
-        $scope.deleteCategory = function(id) {
-            Category.delete({categoryId:id});
-            for (var i = 0; i < $scope.categories.length; i++) {
-                if (id === $scope.categories[i]._id) {
-                    $scope.categories.splice(i, 1);
-                }
-            }
-        };
-
-
-        //////////* Entry Categories *//////////
-        // These are categories that exist as part of an entry
-
+        // create an empty array to temporarily hold our entry categories
         $scope.entryCategories = [] 
 
+        // load the page with all 'global' categories
+        $scope.categories = Category.query();
+
+        // method for adding an entry category and possibly a 'global' category
         $scope.addEntryCategory = function(category) {
             if (category) {
                 // If the category hasn't already been added as an entry
@@ -90,6 +88,7 @@ widtControllers.controller('mainCtrl', ['$scope', 'Entry', 'Category',
             }
         }
 
+        // method for deleting an entry category
         $scope.deleteEntryCategory = function(category) {
             for (var i = 0; i < $scope.entryCategories.length; i++) {
                 if (category === $scope.entryCategories[i]) {
@@ -97,4 +96,14 @@ widtControllers.controller('mainCtrl', ['$scope', 'Entry', 'Category',
                 }
             }
         }
+
+        // method for deleting a 'global' category
+        $scope.deleteCategory = function(id) {
+            id && Category.delete({categoryId:id});
+            for (var i = 0; i < $scope.categories.length; i++) {
+                if (id === $scope.categories[i]._id) {
+                    $scope.categories.splice(i, 1);
+                }
+            }
+        };
 }]);

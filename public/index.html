@@ -24,6 +24,7 @@
 
             <div class="jumbotron text-center">
                 <h1>WIDT</h1>
+                <h3>What I Did Today - a microblog</h3>
             </div>
             <div id="num-entries" class="text-center">
                 <h1>
@@ -35,20 +36,28 @@
             <div id="entry-form" class="row">
                 <div class="col-sm-8 col-sm-offset-2">
                     <!-- have angular handle the form submission -->
-                    <form ng-submit="addEntry()">
+                    <form ng-submit="addEntry(newEntry)">
                         <div class="form-group">
 
                             <textarea class="form-control" rows="5"
                                 placeholder="What did you do today?" type="text" ng-model="newEntry.text">
                             </textarea>
 
+                            <!-- list 'global' categories in a select box -->
                             <div class="input-group">
-                                <select ng-model="selectCategory" 
+                            <div class="input-group">
+                                <select class="form-control" ng-model="selectCategory" 
                                     ng-options="c.text for c in categories" ng-change="addEntryCategory(selectCategory)">
+                                    <option value="">Categories</option>
                                 </select>
-                                <input type="button" class="btn" ng-click="deleteCategory(selectCategory._id)" value="-">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" 
+                                        ng-click="deleteCategory(selectCategory._id)">-</button>
+                                </span>
+                            </div>
                             </div>
 
+                            <!-- allow users to create/delete entry categories -->
                             <div class="input-group">
                                 <div class="input-group">
                                     <input type="text" class="form-control" 
@@ -59,41 +68,50 @@
                                         ng-click="addEntryCategory(newEntryCategory)">+</button>
                                     </span>
 
+                                </div>
+                            </div>
                                     <span ng-repeat="category in entryCategories">
                                             <input type="button" class="btn" ng-click="deleteEntryCategory(category)" 
                                             value='{{ category + " |\u2718" }}'>
                                     </span>
-                                </div>
-                            </div>
-                        </div>
+                        </div><!-- end div.form-group -->
 
                         <div class="text-right">
-                            <button type="submit" class="btn btn-primary btn-lg">Add</button>
+                            <button type="submit" class="btn btn-primary btn-lg">Add Entry</button>
                         </div>
                     </form>
                 </div>
             </div>
 
 
-            <!-- list entries and their categories -->
+            <!-- list entries, their categories, and a delete button -->
             <div id="entry-list" class="row">
                 <div class="col-md-8 col-md-offset-2">
                     <div class="form-group" ng-repeat="entry in entries | orderBy:'-created_at'">
-                        <span id="entry-date">{{ entry.created_at | date:'medium' }}</span>
+                        <form name="prevEntry">
+                          <span id="entry-date">
+                              {{ entry.created_at | date:'medium' }}
+                              <span ng-hide="entry.modified == entry.created_at"> | 
+                                  Modified: {{ entry.modified | date:'medium' }}
+                              </span>
+                          </span>
 
-                        <textarea class="form-control" rows="5">{{ entry.text }}</textarea>
-                        <span class="label label-info" ng-repeat="entryCategory in entry.categories">
-                            {{ entryCategory | lowercase }}
-                        </span>
-                        <div class="text-right">
-                            <input type="button" class="btn btn-danger" ng-click="deleteEntry(entry._id)" value="Delete">
-                        </div>
+                          <textarea class="form-control" ng-model="entry.text" rows="5">{{ entry.text }}</textarea>
+                          <span class="label label-info" ng-repeat="entryCategory in entry.categories">
+                              {{ entryCategory | lowercase }}
+                          </span>
+                          <div class="text-right">
+                              <input type="button" class="btn btn-danger" ng-click="deleteEntry(entry._id)" value="Delete">
+                              <input type="button" class="btn btn-default" value="Update"
+                              ng-hide="prevEntry.$pristine" ng-click="updateEntry(entry)">
+                          </div>
+                        <form name="prevEntry">
 
                     </div>
 
                 </div>
             </div>
+
         </div><!-- end div.container -->
 </body>
 </html>
-

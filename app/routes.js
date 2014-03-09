@@ -24,6 +24,22 @@ module.exports = function(app) {
             });
     });
 
+    //update an enrty
+    app.put('/api/entries', function(req, res) {
+        Entry.findOne({_id : req.body._id}, function(err, entry) {
+            if (err) {
+                res.send(err);
+            } else {
+                entry.text = req.body.text;
+                entry.modified = new Date;
+                console.log(entry.modified);
+                entry.save(function(err, newEntry) {
+                    err ? res.send(err) : res.send(newEntry);
+                });
+            }
+        });
+    });
+
     // delete an entry
     app.delete('/api/entries/:entry_id', function(req, res) {
         Entry.remove({_id : req.params.entry_id}, function(err, entry) {

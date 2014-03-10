@@ -6,6 +6,7 @@
         "angular-resource": "latest",   
         "angular-bootstrap": "latest",  
         "angular-mocks": "latest",  
+        "angular-scenario": "latest",  
         "bootstrap-css-only": "latest"  
     }
 } 

@@ -15,5 +15,6 @@ app.configure(function() {
 
 require('./app/routes.js')(app);
 
-app.listen(port);
-console.log("Listening on port " + port);
+app.listen(port, "127.0.0.1", function() {
+    console.log("Listening on port " + port);
+});

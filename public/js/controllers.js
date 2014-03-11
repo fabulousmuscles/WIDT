@@ -1,5 +1,7 @@
 'use strict'
                                
+// even though there's currently only 1 controller, still calling
+// it by plural, 'controllers'
 var widtControllers = angular.module('widtControllers', [])
 
 widtControllers.controller('MainCtrl', ['$scope', 'Entry', 'Category',

@@ -1,5 +1,9 @@
 # WIDT
 
+A simple microblogging app inspired by [Scotch.io's todo app] (https://github.com/scotch-io/node-todo). Built using the MEAN stack, 
+with help from Mongoose and Twitter Bootstrap. 
+Intended for demonstration purposes. Contibutions and/or suggestions more than welcome!
+
 ## Requirements
 
 - Node.js
@@ -13,7 +17,7 @@
     
     `$ npm install --production`
 
-3. Install addition dependencies with Bower:
+3. Install additional dependencies with Bower:
 
     `$ bower install`
 

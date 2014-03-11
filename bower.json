@@ -2,12 +2,12 @@
     "name": "widt",            
     "version": "0.0.1",        
     "dependencies": {
-        "angular": "latest",   
-        "angular-resource": "latest",   
-        "angular-bootstrap": "latest",  
-        "angular-mocks": "latest",  
-        "angular-scenario": "latest",  
-        "bootstrap-css-only": "latest"  
+        "angular": "~1.2.14",   
+        "angular-resource": "~1.2.14",   
+        "angular-bootstrap": "~0.10.0",  
+        "angular-mocks": "~1.2.14",  
+        "angular-scenario": "~1.2.14",  
+        "bootstrap-css-only": "~3.1.1"  
     }
 } 
 

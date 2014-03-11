@@ -5,8 +5,8 @@
   "main"         : "server.js",
   "author"       : "Reuben Urbina",   
   "dependencies" : {           
-    "express"    : "latest",   
-    "mongoose"   : "latest"    
+    "express"    : "~3.5.0",   
+    "mongoose"   : "~3.8.8"    
   },
   "devDependencies": {
       "phantomjs": "~1.9",
@@ -21,6 +21,6 @@
       "karma-coffee-preprocessor": "~0.1.0",
       "karma-phantomjs-launcher": "~0.1.0",
       "karma-script-launcher": "~0.1.0",
-      "jasmine-node": "latest"
+      "jasmine-node": "~1.14.2"
   }
 } 

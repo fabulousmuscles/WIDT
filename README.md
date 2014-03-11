@@ -11,15 +11,15 @@
 1. Clone this repo
 2. Install node dependencies via npm:
     
-    $ npm install --production
+    `$ npm install --production`
 
 3. Install addition dependencies with Bower:
 
-    $ bower install
+    `$ bower install`
 
 4. Run the server:
 
-    $ node server.js
+    `$ node server.js`
 
 5. View in your browser at `http://localhost:8000`
 
@@ -37,4 +37,5 @@ I may even just switch out jasmine entirely and just go with mocha.. We'll see.
 - Add animations
 - Ability to sort by category, date...
 - Ability to search entries
+- Should be able to delete categories of created entries
 - Pagination

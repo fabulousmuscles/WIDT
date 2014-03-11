@@ -21,16 +21,14 @@
 </head>
 <body ng-controller="MainCtrl">
         <div class="container">
-
-            <div class="jumbotron text-center">
+            <div id="top-container">
                 <h1>WIDT</h1>
-                <h3>What I Did Today - a microblog</h3>
-            </div>
-            <div id="num-entries" class="text-center">
-                <h1>
+                <h3 class="text-muted">What I Did Today</h3>
+                <h3 class="text-muted">
                     <div class="label label-info">{{ entries.length }}</div> Entries and counting!
-                </h1>
+                </h3>
             </div>
+            <hr>
 
             <!-- main form for creating new entries -->
             <div id="entry-form" class="row">
@@ -90,9 +88,10 @@
                     <div class="form-group" ng-repeat="entry in entries | orderBy:'-created_at'">
                         <form name="prevEntry">
                           <span id="entry-date">
-                              {{ entry.created_at | date:'medium' }}
-                              <span ng-hide="entry.modified == entry.created_at"> | 
-                                  Modified: {{ entry.modified | date:'medium' }}
+                              {{ entry.created_at | date:'short' }}
+                              <!-- if the entry hasn't been modified, hide the modified date -->
+                              <span class="text-muted" ng-hide="entry.modified === entry.created_at"> | 
+                                  Modified: {{ entry.modified | date:'short' }}
                               </span>
                           </span>
 

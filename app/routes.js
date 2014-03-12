@@ -41,8 +41,8 @@ module.exports = function(app) {
 
     // delete an entry
     app.delete('/api/entries/:entry_id', function(req, res) {
-        Entry.remove({_id : req.params.entry_id}, function(err, entry) {
-            err ? res.send(err) : res.send(entry);
+        Entry.remove({_id : req.params.entry_id}, function(err, result) {
+            err ? res.send(err) : res.send(result);
         });
     });
 

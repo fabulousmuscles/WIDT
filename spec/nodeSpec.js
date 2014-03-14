@@ -2,13 +2,31 @@ var request = require('request');
 
 describe("The homepage", function() {
     it("should respond with widt", function(done) {
-        request("http://localhost:8000", function(error, response, body) {
+        request("http://localhost:8000", function(err, response, body) {
+            expect(err).toBeNull();
             expect(response.statusCode).toBe(200);
             expect(body).toContain('WIDT');
             done();
         });
     });
-});
+
+    it("should be redirected to with invalid url", function(done) {
+        request({url:"http://localhost:8000/foo", followRedirect:false}, function(err, response, body) {
+            expect(err).toBeNull();
+            expect(response.statusCode).toBe(302);
+            expect(response.headers.location).toBe('/');
+            done();
+        });
+
+        request({url:"http://localhost:8000/api/", followRedirect:false}, function(err, response, body) {
+            expect(err).toBeNull();
+            expect(response.statusCode).toBe(302);
+            expect(response.headers.location).toBe('/');
+            done();
+        });
+    });
+
+}); 
 
 describe("The api", function() {
 
@@ -62,7 +80,7 @@ describe("The api", function() {
         });
     });
 
-    it("should delete an entry", function(done) {
+    it("should delete entries", function(done) {
         var re = /_id": "(.*?)"/g
         request("http://localhost:8000/api/entries", function(err, res, body) {
             expect(err).toBeNull();

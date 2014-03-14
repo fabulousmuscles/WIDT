@@ -1,3 +1,5 @@
+// modified from angular-seed project: https://github.com/angular/angular-seed
+
 module.exports = function(config){
   config.set({ 
     basePath : '../',

@@ -1,5 +1,7 @@
 #!/bin/bash
                                
+# from angular-seed project: https://github.com/angular/angular-seed
+
 BASE_DIR=`dirname $0`          
 
 echo ""                        

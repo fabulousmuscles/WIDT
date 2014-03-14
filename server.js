@@ -3,8 +3,16 @@ var app      = express();
 var mongoose = require('mongoose');
 var port     = process.env.PORT || 8000;
 
+if (process.argv[2] == 'test'){
+    process.env.NODE_ENV = 'test';
+}
+
 var database = require('./config/db');
-mongoose.connect(database.url);
+if (process.env.NODE_ENV == 'test') {
+    mongoose.connect(database.url);
+} else {
+    mongoose.connect(database.test_url);
+}
   
 app.configure(function() {     
     app.use(express.static(__dirname + '/public'));

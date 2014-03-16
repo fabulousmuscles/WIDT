@@ -1,6 +1,6 @@
 'use strict';
                                
-/* jasmine specs for controllers go here */
+/* jasmine specs for controllers */
 describe('WIDT controllers', function() {
 
   beforeEach(function(){       
@@ -37,6 +37,26 @@ describe('WIDT controllers', function() {
 
       expect(scope.entries).toEqualData(
           [{text: 'office fun'}, {text: 'stood by the watercooler'}]);
+    });
+
+    it('should display 2 categories fetched from xhr', function() {
+      expect(scope.categories).toEqualData([]);
+      $httpBackend.flush();
+
+      expect(scope.categories).toEqualData(
+          [{text: 'fun'}, {text: 'news'}]);
+    });
+
+    it('should save an entry', function() {
+        $httpBackend.expectPOST('api/entries', 'watched anime').respond(200, {text: 'watched anime'});
+        scope.addEntry('watched anime')
+        $httpBackend.flush();
+        expect(scope.entries[0].text).toBe('watched anime');
+        expect(scope.entries[0].$resolved).toBe(true);
+        expect(scope.entries.length).toBe(3);
+        expect(scope.newEntry).toBe('');
+        expect(scope.entryCategories).toEqualData([]);
+        expect(scope.selectCategory).toEqualData(null);
     });
   });
 });

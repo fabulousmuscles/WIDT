@@ -66,10 +66,11 @@ describe('WIDT controllers', function() {
     });
 
     it('should delete an entry', function() {
-        $httpBackend.whenDELETE('api/entries/222').respond(200, '222');
         $httpBackend.flush();
         expect(scope.entries.length).toBe(2);
+        $httpBackend.expectDELETE('api/entries/222').respond(200, '222');
         scope.deleteEntry('222');
+        $httpBackend.flush();
         expect(scope.entries.length).toBe(1);
         expect(scope.entries).toEqualData(
           [{text: 'stood by the watercooler', _id: '333'}]);
@@ -87,9 +88,10 @@ describe('WIDT controllers', function() {
     });
 
     it('should save categories', function() {
-        $httpBackend.expectPOST('api/categories', {text: 'cool'})
-        .respond(200, {text: 'cool'});
-        scope.addEntryCategory({text: 'cool'});
+        var new_cat = {text: 'cool'};
+        $httpBackend.expectPOST('api/categories', new_cat)
+          .respond(200, new_cat);
+        scope.addEntryCategory(new_cat);
         $httpBackend.flush();
         expect(scope.categories[scope.categories.length - 1].text).toBe('cool');
         expect(scope.categories[scope.categories.length - 1].$resolved).toBe(true);
@@ -97,7 +99,7 @@ describe('WIDT controllers', function() {
         expect(scope.entryCategories).toEqualData(['cool']);
 
         $httpBackend.expectPOST('api/categories', {text: 'random'})
-        .respond(200, {text: 'random'});
+          .respond(200, {text: 'random'});
         scope.addEntryCategory({text: 'random'});
         $httpBackend.flush();
         expect(scope.categories[scope.categories.length - 1].text).toBe('random');
@@ -105,5 +107,34 @@ describe('WIDT controllers', function() {
         expect(scope.categories.length).toBe(4);
         expect(scope.entryCategories).toEqualData(['cool', 'random']);
     });
+
+    it('should delete "global" categories', function() {
+        $httpBackend.flush();
+        expect(scope.categories)
+          .toEqualData([{text: 'fun', _id: '123'}, {text: 'news', _id: '456'}]);
+
+        $httpBackend.expectDELETE('api/categories/123').respond(200, '123')
+        scope.deleteCategory('123');
+        $httpBackend.flush();
+        expect(scope.categories)
+          .toEqualData([{text: 'news', _id: '456'}]);
+
+        $httpBackend.expectDELETE('api/categories/456').respond(200, '456')
+        scope.deleteCategory('456');
+        $httpBackend.flush();
+        expect(scope.categories).toEqualData([]);
+    });
+
+    it('should delete entry categories', function() {
+        var new_cat = {text: 'cool'};
+        expect(scope.entryCategories).toEqualData([]);
+        $httpBackend.whenPOST('api/categories', new_cat).respond(200, new_cat);
+        scope.addEntryCategory(new_cat);
+        $httpBackend.flush();
+        expect(scope.entryCategories).toEqualData(['cool']);
+        scope.deleteEntryCategory('cool');
+        expect(scope.entryCategories).toEqualData([]);
+    });
+
   });
 });

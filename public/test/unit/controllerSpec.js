@@ -86,16 +86,24 @@ describe('WIDT controllers', function() {
         expect(entry).toEqualData(entry2);
     });
 
-    it('should save a "global" category', function() {
-        $httpBackend.expectPOST('api/categories', 'cool').respond(
-            200, {text: 'cool'}
-        );
-        scope.addEntryCategory('cool')
+    it('should save categories', function() {
+        $httpBackend.expectPOST('api/categories', {text: 'cool'})
+        .respond(200, {text: 'cool'});
+        scope.addEntryCategory({text: 'cool'});
         $httpBackend.flush();
         expect(scope.categories[scope.categories.length - 1].text).toBe('cool');
         expect(scope.categories[scope.categories.length - 1].$resolved).toBe(true);
         expect(scope.categories.length).toBe(3);
-        // console.log(scope.entryCategories);
+        expect(scope.entryCategories).toEqualData(['cool']);
+
+        $httpBackend.expectPOST('api/categories', {text: 'random'})
+        .respond(200, {text: 'random'});
+        scope.addEntryCategory({text: 'random'});
+        $httpBackend.flush();
+        expect(scope.categories[scope.categories.length - 1].text).toBe('random');
+        expect(scope.categories[scope.categories.length - 1].$resolved).toBe(true);
+        expect(scope.categories.length).toBe(4);
+        expect(scope.entryCategories).toEqualData(['cool', 'random']);
     });
   });
 });

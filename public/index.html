@@ -33,18 +33,6 @@
                             </textarea>
 
                             <!-- list 'global' categories in a select box -->
-                            <div class="input-group">
-                            <div class="input-group">
-                                <select class="form-control" ng-model="selectCategory" 
-                                    ng-options="c.text for c in categories" ng-change="addEntryCategory(selectCategory)">
-                                    <option value="">Categories</option>
-                                </select>
-                                <span class="input-group-btn">
-                                    <button type="button" class="btn btn-default" 
-                                        ng-click="deleteCategory(selectCategory._id)">-</button>
-                                </span>
-                            </div>
-                            </div>
 
                             <!-- allow users to create/delete entry categories -->
                             <div class="input-group">
@@ -58,6 +46,18 @@
                                     </span>
 
                                 </div>
+                            </div>
+                            <div class="input-group">
+                            <div class="input-group">
+                                <select class="form-control" ng-model="selectCategory" 
+                                    ng-options="c.text for c in categories" ng-change="addEntryCategory(selectCategory)">
+                                    <option value="">Categories</option>
+                                </select>
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" 
+                                        ng-click="deleteCategory(selectCategory._id)">-</button>
+                                </span>
+                            </div>
                             </div>
                                     <span ng-repeat="category in entryCategories">
                                             <input type="button" class="btn btn-info" ng-click="deleteEntryCategory(category)" 
@@ -73,10 +73,22 @@
             </div>
 
 
-            <!-- list entries, their categories, and a delete button -->
+            <hr>
             <div id="entry-list" class="row">
+                <!-- search entries -->
+                <div class="form-group col-md-3 col-md-offset-7">
+                    <div class="input-group input-group-sm">
+                        <input class="form-control" ng-model="search">
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </span>
+                    </div>
+                </div>
+                <!-- list entries, their categories, and a delete button -->
                 <div class="col-md-8 col-md-offset-2">
-                    <div class="form-group" ng-repeat="entry in entries | orderBy:'-created_at'">
+                    <!-- repeat the entries, order them by newest first, and allow only the
+                         text property to be searchable -->
+                    <div class="form-group" ng-repeat="entry in entries | orderBy:'-created_at' | filter:{text:search}">
                         <form name="prevEntry">
                           <span id="entry-date">
                               {{ entry.created_at | date:'short' }}

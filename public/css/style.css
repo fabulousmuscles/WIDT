@@ -30,11 +30,14 @@ hr {
 }
 
 #entry-list, #num-entries { 
-    margin-bottom:30px; 
+    margin-bottom: 30px; 
+}
+#entry-list {
+    margin-top: 40px;
 }
 
 #entry-form { 
-    margin-bottom:50px; 
+    margin-bottom: 50px; 
     margin-top: 30px;
 }    
 

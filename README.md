@@ -28,9 +28,7 @@ with help from Mongoose and Twitter Bootstrap.
 
 ## TODO
 
-- Tests (currently working on)
 - Add animations
 - Ability to sort by category, date...
-- Ability to search entries
 - Should be able to delete categories of created entries
 - Pagination

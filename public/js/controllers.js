@@ -17,6 +17,15 @@ widtControllers.controller('MainCtrl', ['$scope', 'Entry', 'Category',
             if (newEntry) {
                 // assign any categories that have been attached to this entry
                 newEntry.categories = $scope.entryCategories;
+                // assign empty string if no categories,
+                // so we can filter in index.html.
+                // If we didn't have the empty string, the category would not
+                // be redisplayed when choosing a category to filter by, then
+                // choose no categories (in index.html filter)
+                if (!newEntry.categories.length) {
+                    newEntry.categories = "";
+                }
+
                 Entry.save(newEntry, function(entry) {
                     // Add the entry to the front of the entries array
                     $scope.entries.unshift(entry)

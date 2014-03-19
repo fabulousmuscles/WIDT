@@ -84,11 +84,24 @@
                         </span>
                     </div>
                 </div>
+                <!-- show entries with only certain category-->
+                <div class="form-group col-md-3 col-md-offset-7">
+                    <div class="input-group input-group-sm">
+                        <select class="form-control" ng-model="cats.c.text" >
+                            <option value="">Categories</option>
+                            <option ng-repeat="c in categories" value="{{c.text}}">{{c.text}}</option>
+                        </select>
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </span>
+                    </div>
+                </div>
                 <!-- list entries, their categories, and a delete button -->
                 <div class="col-md-8 col-md-offset-2">
-                    <!-- repeat the entries, order them by newest first, and allow only the
-                         text property to be searchable -->
-                    <div class="form-group" ng-repeat="entry in entries | orderBy:'-created_at' | filter:{text:search}">
+                    <!-- repeat the entries, order them by newest first, and use a filter to filter them by
+                         either category, text, or both -->
+                    <div class="form-group" 
+                        ng-repeat="entry in entries | orderBy:'-created_at' | filter:{text:search, categories:cats.c.text}">
                         <form name="prevEntry">
                           <span id="entry-date">
                               {{ entry.created_at | date:'short' }}
@@ -99,7 +112,9 @@
                           </span>
 
                           <textarea class="form-control" ng-model="entry.text" rows="5">{{ entry.text }}</textarea>
-                          <span class="label label-info" ng-repeat="entryCategory in entry.categories">
+                          <!-- show the entry's categories, unless it's empty -->
+                          <span class="label label-info" 
+                              ng-repeat="entryCategory in entry.categories" ng-hide='entryCategory === ""'>
                               {{ entryCategory | lowercase }}
                           </span>
                           <div class="text-right">

@@ -52,10 +52,13 @@ describe('WIDT controllers', function() {
     });
 
     it('should save an entry', function() {
-        $httpBackend.expectPOST('api/entries', 'watched anime').respond(
-            200, {text: 'watched anime'}
+        var widt = function() {
+            return {text: 'watched anime', categories: ""}
+        };
+        $httpBackend.expectPOST('api/entries', widt).respond(
+            200, widt.text
         );
-        scope.addEntry('watched anime')
+        scope.addEntry({text: 'watched anime'})
         $httpBackend.flush();
         expect(scope.entries[0].text).toBe('watched anime');
         expect(scope.entries[0].$resolved).toBe(true);

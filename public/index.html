@@ -74,7 +74,9 @@
 
 
             <hr>
+
             <div id="entry-list" class="row">
+
                 <!-- search entries -->
                 <div class="form-group col-md-3 col-md-offset-7">
                     <div class="input-group input-group-sm">
@@ -84,6 +86,7 @@
                         </span>
                     </div>
                 </div>
+
                 <!-- show entries with only certain category-->
                 <div class="form-group col-md-3 col-md-offset-7">
                     <div class="input-group input-group-sm">
@@ -96,12 +99,30 @@
                         </span>
                     </div>
                 </div>
+
+                <!-- allow sorting by newest or oldest entries first -->
+                <div class="form-group col-md-3 col-md-offset-7">
+                    <div class="input-group input-group-sm">
+                        Sort by:
+                        <label class="radio-inline">
+                          <input type="radio" name="group1" id="inlineRadio1" 
+                          ng-click="predicate = '-created_at'" checked>
+                          Newest
+                        </label>
+                        <label class="radio-inline">
+                          <input type="radio" name="group1" id="inlineRadio2" value="oldest" 
+                          ng-click="predicate = 'created_at'">
+                          Oldest
+                        </label>
+                    </div>
+                </div>
+
                 <!-- list entries, their categories, and a delete button -->
                 <div class="col-md-8 col-md-offset-2">
                     <!-- repeat the entries, order them by newest first, and use a filter to filter them by
                          either category, text, or both -->
                     <div class="form-group" 
-                        ng-repeat="entry in entries | orderBy:'-created_at' | filter:{text:search, categories:cats.c.text}">
+                        ng-repeat="entry in entries | orderBy:predicate | filter:{text:search, categories:cats.c.text}">
                         <form name="prevEntry">
                           <span id="entry-date">
                               {{ entry.created_at | date:'short' }}

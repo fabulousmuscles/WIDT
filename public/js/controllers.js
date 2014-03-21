@@ -9,6 +9,7 @@ widtControllers.controller('MainCtrl', ['$scope', 'Entry', 'Category',
 
         //////////* Entries *//////////
         
+        $scope.predicate = '-created_at';
         // load the page with all entries
         $scope.entries = Entry.query(); 
   

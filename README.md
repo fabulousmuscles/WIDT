@@ -30,7 +30,8 @@ with help from Mongoose and Twitter Bootstrap.
 
 To install development dependencies, follow the quick install above, but omit the `--production` option
 from step 2. You can then run `./scripts/test.sh` and `./public/scripts/test.sh` from the root directory to run the shell
-scripts that'll run the tests.
+scripts that'll run the tests. The script in `./scripts/test.sh` will start a node server in test mode, create a test database
+with mongodb called `testdb`, then run the tests against that.
 
 ## TODO
 

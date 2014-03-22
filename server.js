@@ -9,9 +9,9 @@ if (process.argv[2] == 'test'){
 
 var database = require('./config/db');
 if (process.env.NODE_ENV == 'test') {
-    mongoose.connect(database.url);
-} else {
     mongoose.connect(database.test_url);
+} else {
+    mongoose.connect(database.url);
 }
   
 app.configure(function() {     

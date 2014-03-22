@@ -26,9 +26,14 @@ with help from Mongoose and Twitter Bootstrap.
 
 5. View in your browser at `http://localhost:8000`
 
+## Dev Install
+
+To install development dependencies, follow the quick install above, but omit the `--production` option
+from step 2. You can then run `./scripts/test.sh` and `./public/scripts/test.sh` from the root directory to run the shell
+scripts that'll run the tests.
+
 ## TODO
 
 - Add animations
-- Ability to sort by category, date...
 - Should be able to delete categories of created entries
 - Pagination
